@@ -13,6 +13,8 @@ options = Options()
 #options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(r"C:\Users\njones\PycharmProjects\ReportBot\Drivers\chromedriver.exe", chrome_options=options)
 
+print("\nWelcome to the XMPie report puller. Please minimize the Chrome window that just opened and enter the following information...\n")
+
 driver.get("http://uweb01/MarketingConsole/Login.aspx?ReturnUrl=%2fMarketingConsole%2fDefault.aspx")
 #Get the user's input
 username = input("Username: ")
@@ -29,7 +31,7 @@ opts = select.options
 for opt in opts:
     accountOptions.append(opt.text)
 
-print("Please choose an account from the following list...")
+print("\nPlease choose an account from the following list...")
 n = 1
 for i in range (len(accountOptions)):
     time.sleep(0.1)
@@ -44,13 +46,15 @@ account = str(accountOptions[int(accountNumber)-1])
 # Select Account
 driver.find_element_by_xpath(f"//select[@id='ctl00_ApplicationContent_AccountDropDown']/option[text()='{account}']").click()
 
+time.sleep(1)
+
 #Prompt for campaign
 select = Select(driver.find_element_by_id("ctl00_ApplicationContent_MarketingCampaignDropDown"))
 opts = select.options
 for opt in opts:
     campaignOptions.append(opt.text)
 
-print("Please choose a campaign from the following list...")
+print("\nPlease choose a campaign from the following list...")
 n = 1
 for i in range (len(campaignOptions)):
     time.sleep(0.1)
@@ -65,7 +69,9 @@ campaign = str(campaignOptions[int(campaignNumber)-1])
 # Select Campaign
 driver.find_element_by_xpath(f"//select[@id='ctl00_ApplicationContent_MarketingCampaignDropDown']/option[text()='{campaign}']").click()
 
-print("Please wait. This could take a couple minutes.")
+print("\nPlease wait. This could take a couple minutes.")
+
+time.sleep(1)
 
 # Select Performance
 driver.find_element_by_xpath('//*[@title="Blank Email Performance Report" and text() = "Email Performance"]').click()
@@ -79,7 +85,7 @@ opts = select.options
 for opt in opts:
     touchpointOptions.append(opt.text)
 
-print("Please choose a touchpoint from the following list...")
+print("\nPlease choose a touchpoint from the following list...")
 n = 1
 for i in range (len(touchpointOptions)):
     time.sleep(0.1)
@@ -94,7 +100,7 @@ touchpoint = str(touchpointOptions[int(touchpointNumber)-1])
 
 driver.find_element_by_xpath(f"//select[@id='ctl00_ApplicationContent_ReportID50_TouchpointDropDown']/option[text()='{touchpoint}']").click()
 
-print("Pulling the reports from the last deployment! They should be in your downloads folder momentarily.")
+print("\nPulling the reports from the last deployment! They should be in your downloads folder momentarily.")
 
 # Download Performance
 driver.find_element_by_id("ctl00_ApplicationContent_ExportToPNGButton").click()
